@@ -9,9 +9,10 @@ cran <- c("BiocManager", "data.table", "ggplot2", "ggrepel", "pheatmap", "vegan"
 bioc <- c("tximport", "DESeq2", "edgeR", "limma", "pcaMethods", "impute", "MSstats",
           "clusterProfiler", "enrichplot", "GO.db", "fgsea", "AnnotationDbi", "BiocParallel")
 
-install.packages(cran)
+install.packages("BiocManager")
 BiocManager::install(version = Sys.getenv("BIOC_VERSION", "3.22"), ask = FALSE, update = FALSE)
-BiocManager::install(bioc, ask = FALSE, update = FALSE)
+# CRAN and Bioconductor together: some CRAN packages (imputeLCMD) depend on Bioconductor ones
+BiocManager::install(c(cran, bioc), ask = FALSE, update = FALSE)
 
 missing <- setdiff(c(cran, bioc), rownames(installed.packages()))
 if (length(missing) > 0) stop("Packages not installed: ", paste(missing, collapse = ", "))
