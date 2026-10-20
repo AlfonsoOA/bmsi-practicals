@@ -74,6 +74,8 @@ jobs:
               echo "::error title=$(basename $f)::$(tail -n 25 "$f" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
             fi
           done
+          # Which long steps PC3 ran or took from its caches
+          echo "::notice title=PC3 long steps::$(grep -inE 'fitting|bayesian|cache|reus|MSstats input|setting|minutes|compil' test_logs/PC3_Proteomics.log | head -n 40 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
           ! grep -qE 'FAILED|MISSING' test.log
       - uses: actions/upload-artifact@v4
         if: always()
