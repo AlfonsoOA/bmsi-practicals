@@ -6,7 +6,7 @@
   "image": "ghcr.io/alfonsooa/bmsi-practicals:2026-27",
   "hostRequirements": { "cpus": 2, "memory": "8gb", "storage": "32gb" },
   "postCreateCommand": "bash .devcontainer/setup_data.sh",
-  "postAttachCommand": "sudo rstudio-server start",
+  "postAttachCommand": "rstudio-server start",
   "forwardPorts": [8787],
   "portsAttributes": {
     "8787": { "label": "RStudio", "onAutoForward": "openBrowser" }
