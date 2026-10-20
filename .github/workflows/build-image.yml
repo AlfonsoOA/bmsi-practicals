@@ -67,6 +67,14 @@ jobs:
             -v "$PWD":/repo -w /repo $IMAGE:$TAG bash tests/run_practicals.sh | tee test.log
           echo "### Practicals (2 CPU, 8 GB)" >> $GITHUB_STEP_SUMMARY
           grep '^|' test.log >> $GITHUB_STEP_SUMMARY
+          # The same table as an annotation (readable through the API), and fail if anything failed
+          echo "::notice title=Practicals test::$(grep '^|' test.log | sed ':a;N;$!ba;s/\n/%0A/g')"
+          for f in test_logs/*.log; do
+            if grep -qE "^Error|Execution halted" "$f"; then
+              echo "::error title=$(basename $f)::$(tail -n 25 "$f" | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
+            fi
+          done
+          ! grep -qE 'FAILED|MISSING' test.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:
