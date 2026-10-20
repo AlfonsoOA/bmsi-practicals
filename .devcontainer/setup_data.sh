@@ -13,4 +13,8 @@ for z in "$REPO"/data/ForStudents_*.zip; do
 done
 mkdir -p ~/BMSi/scripts
 cp -n "$REPO"/scripts/* ~/BMSi/scripts/ 2>/dev/null || true
+# RStudio starts in ~/BMSi (Files pane and working directory)
+mkdir -p ~/.config/rstudio
+[ -f ~/.config/rstudio/rstudio-prefs.json ] || \
+  echo '{ "initial_working_directory": "~/BMSi" }' > ~/.config/rstudio/rstudio-prefs.json
 echo "Data and scripts are in ~/BMSi:"; ls ~/BMSi
