@@ -32,7 +32,7 @@ run PC4b_MOFA       ~/BMSi/scripts/PC4b_MOFA.R
 
 # Terminal tools of PC1 and PC2
 source /opt/conda/etc/profile.d/conda.sh
-for e in bmsi_pc1 bmsi_pc2 bmsi_pc2_trinity bmsi_pc2_busco; do
+for e in bmsi_pc1 bmsi_pc2; do
   conda env list | grep -q "^$e " && r=OK || r=MISSING
   echo "| conda env $e | $r | | |"
 done

@@ -60,7 +60,11 @@ jobs:
         run: |
           docker pull $IMAGE:$TAG
           echo "### Image" >> $GITHUB_STEP_SUMMARY
-          echo "Size: $(docker image inspect $IMAGE:$TAG --format '{{.Size}}' | awk '{printf "%.1f GB", $1/1e9}')" >> $GITHUB_STEP_SUMMARY
+          SIZE=$(docker image inspect $IMAGE:$TAG --format '{{.Size}}' | awk '{printf "%.1f GB", $1/1e9}')
+          echo "Size: $SIZE" >> $GITHUB_STEP_SUMMARY
+          echo "::notice title=Image size::$SIZE (uncompressed)"
+          docker history --no-trunc --format '{{.Size}}  {{.CreatedBy}}' $IMAGE:$TAG | awk '$1 ~ /GB|MB/' | cut -c1-120 > layers.txt
+          echo "::notice title=Large layers::$(sed 's/%/%25/g' layers.txt | sed ':a;N;$!ba;s/\n/%0A/g')"
       - name: Run the practicals at codespace size (2 CPU, 8 GB)
         run: |
           docker run --rm --cpus 2 --memory 8g --memory-swap 8g -e HOME=/root \

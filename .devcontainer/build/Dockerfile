@@ -5,6 +5,11 @@
 # Contents: R 4.5 + CRAN/Bioconductor packages of PC2-PC4 (binary packages from
 # Posit Public Package Manager, frozen at the date of the R release) and the
 # conda environments of the terminal parts (PC1, PC2).
+#
+# Trinity and BUSCO are NOT installed (several GB, and Trinity needs far more than
+# the 8 GB of a codespace): PC2_terminal.sh skips both when their precomputed
+# results from ForStudents_PC2.zip are present. Their environments exist empty
+# only so that the script does not try to create them.
 FROM ghcr.io/rocker-org/devcontainer/r-ver:4.5
 
 ARG BIOC_VERSION=3.22
@@ -34,8 +39,8 @@ RUN curl -fsSL -o /tmp/miniforge.sh \
       quast=5.3.0 seqkit=2.14.0 multiqc=1.35 sra-tools=3.4.1 blast=2.16.0 \
  && ${CONDA_DIR}/bin/conda create -y -n bmsi_pc2 --override-channels -c conda-forge -c bioconda \
       python=3.11 fastqc=0.12.1 fastp=1.3.7 multiqc=1.35 salmon=2.8.0 minimap2=2.31 seqkit=2.14.0 sra-tools=3.4.1 \
- && ${CONDA_DIR}/bin/conda create -y -n bmsi_pc2_trinity --override-channels -c conda-forge -c bioconda trinity=2.15.2 \
- && ${CONDA_DIR}/bin/conda create -y -n bmsi_pc2_busco --override-channels -c conda-forge -c bioconda busco=6.1.0 \
+ && ${CONDA_DIR}/bin/conda create -y -n bmsi_pc2_trinity \
+ && ${CONDA_DIR}/bin/conda create -y -n bmsi_pc2_busco \
  && ${CONDA_DIR}/bin/conda clean -afy \
  && chown -R 1000:1000 ${CONDA_DIR}
 
