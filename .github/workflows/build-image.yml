@@ -32,6 +32,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Lower-case image name
         run: echo "IMAGE=${IMAGE,,}" >> $GITHUB_ENV
+      - name: Build the base image (log tail reported as an annotation if it fails)
+        run: |
+          set -o pipefail
+          if ! docker build --progress=plain -t bmsi-base .devcontainer/build 2>&1 | tee build.log; then
+            msg=$(tail -n 80 build.log | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')
+            echo "::error title=Image build failed::$msg"
+            exit 1
+          fi
       - name: Build and push (Dockerfile + RStudio Server feature)
         uses: devcontainers/ci@v0.3
         with:
