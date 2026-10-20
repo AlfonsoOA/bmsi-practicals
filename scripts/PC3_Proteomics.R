@@ -578,7 +578,7 @@ results$ttest <- significance(resA, D2, "2.9", "ttest", "Pipeline A: Welch t-tes
 D3 <- out_dir("3_PipelineB_MSstats")
 
 # 3.1 Preprocessing: the report filtered in 2.2 (biological runs only) in MSstats format
-ms_runs <- sort(run_info[Condition != QC_LABEL, Run])
+ms_runs <- sort(run_info[Condition != QC_LABEL, Run], method = "radix")   # radix = same order in every locale (cache keys)
 key_b <- paste(c("v3", ms_runs, MIN_PEPTIDES, QVALUE), collapse = ";")
 cat("MSstats input: the report filtered in 2.2 (q-value <", QVALUE, ", >=", MIN_PEPTIDES, "peptides per protein and run),",
     length(ms_runs), "biological runs\n")
@@ -790,7 +790,7 @@ for (k in c("ttest", "MSstats")) {
   sig <- results[[k]][Significant == TRUE]
   # Results are stored per protein, for these samples and settings: only the proteins
   # not yet in the file are fitted (none, when the instructor's file is used).
-  key <- paste(c("model-v5", key_b, sort(run_info$Run), LFC, SEED, MSSTATS_USE, NORMALISATION, DELTA, CENSOR_TRIM, DRIFT, MIN_VALID), collapse = ";")
+  key <- paste(c("model-v5", key_b, sort(run_info$Run, method = "radix"), LFC, SEED, MSSTATS_USE, NORMALISATION, DELTA, CENSOR_TRIM, DRIFT, MIN_VALID), collapse = ";")
   cache <- file.path(D4, paste0("Bayesian_", k, "_", key_hash(key), ".csv"))   # one file per configuration
   old <- file.path(D4, paste0("Bayesian_", k, ".csv"))   # name used by earlier versions of the script
   if (!file.exists(cache) && file.exists(old) && file.exists(paste0(old, ".key")) && identical(readLines(paste0(old, ".key")), key)) {
