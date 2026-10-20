@@ -1,0 +1,18 @@
+{
+  // What students get when they create a codespace: the prebuilt image (no build
+  // time), a 2-core / 8 GB machine, the practical data in ~/BMSi and RStudio
+  // opening in a browser tab.
+  "name": "Systems Molecular Biology - computer practicals",
+  "image": "ghcr.io/alfonsooa/bmsi-practicals:2026-27",
+  "hostRequirements": { "cpus": 2, "memory": "8gb", "storage": "32gb" },
+  "postCreateCommand": "bash .devcontainer/setup_data.sh",
+  "postAttachCommand": "sudo rstudio-server start",
+  "forwardPorts": [8787],
+  "portsAttributes": {
+    "8787": { "label": "RStudio", "requireLocalPort": true, "onAutoForward": "openBrowser" }
+  },
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] },
+    "vscode": { "extensions": [] }
+  }
+}

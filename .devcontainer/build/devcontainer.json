@@ -1,0 +1,8 @@
+{
+  // Used only by the workflow that builds and publishes the image (instructor side).
+  "name": "BMSi practicals (image build)",
+  "build": { "dockerfile": "Dockerfile" },
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/rstudio-server:0": { "singleUser": true }
+  }
+}
