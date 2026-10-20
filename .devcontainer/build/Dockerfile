@@ -15,9 +15,12 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
       libglpk40 libxml2 libcurl4 libhdf5-dev libgsl27 \
  && rm -rf /var/lib/apt/lists/*
 
-# R packages (one layer; fails the build if any package is missing)
+# R packages (one layer; fails the build if any package is missing).
+# Packages that still ask for C++11 (MSstats) are compiled as C++17: current
+# RcppArmadillo headers need at least C++14.
 COPY install_packages.R /tmp/install_packages.R
-RUN BIOC_VERSION=${BIOC_VERSION} Rscript /tmp/install_packages.R && rm -rf /tmp/* /root/.cache
+RUN mkdir -p /root/.R && echo "CXX11STD = -std=gnu++17" > /root/.R/Makevars \
+ && BIOC_VERSION=${BIOC_VERSION} Rscript /tmp/install_packages.R && rm -rf /tmp/* /root/.cache
 
 # Conda (Miniforge) and the environments of the terminal parts, same names and
 # versions as in the practical scripts, so the scripts find them and skip installation
