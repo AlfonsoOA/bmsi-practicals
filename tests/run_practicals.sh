@@ -42,3 +42,8 @@ for t in megahit fastp salmon quast.py prefetch blastn; do
   echo "| $t ($e) | $r | | |"
 done
 command -v rstudio-server > /dev/null && echo "| RStudio Server | OK | | |" || echo "| RStudio Server | MISSING | | |"
+
+# Student data downloaded or unpacked at codespace creation
+for d in PC1_assembly/ForStudents PC2_RNAseq/ForStudents PC3_Proteomics PC4_Enrichment; do
+  if [ -d ~/BMSi/$d ]; then echo "| data ~/BMSi/$d | OK | | $(du -sh ~/BMSi/$d | cut -f1) |"; else echo "| data ~/BMSi/$d | MISSING | | |"; fi
+done
