@@ -6,17 +6,18 @@ the packages, the command-line tools and the data. Nothing to install.
 ## Start (first session, about 5 minutes)
 
 1. Create a free account at [github.com](https://github.com) if you do not have one.
-2. On this page, click the green **Code** button → **Codespaces** → **Create codespace on main**.
-3. Wait while the codespace is created (2–4 minutes the first time). The data and
+2. **Before creating the codespace:** go to [github.com/settings/codespaces](https://github.com/settings/codespaces)
+   → **Default idle timeout** → write **240** minutes → **Save**. Working in RStudio does
+   not count as activity for GitHub, so with the default (30 minutes) the codespace
+   stops in the middle of the practical. The setting only applies to codespaces created
+   after changing it.
+3. On this page, click the green **Code** button → **Codespaces** → **Create codespace on main**.
+4. Wait while the codespace is created (2–4 minutes the first time). The data and
    scripts are unpacked into the folder `~/BMSi`.
-4. When it is ready, the **Terminal** at the bottom of the window shows the address of
+5. When it is ready, the **Terminal** at the bottom of the window shows the address of
    RStudio (`https://<your-codespace>-8787.app.github.dev`): Ctrl + click on it. You can
    also open the **Ports** tab, right-click the **Forwarded address** of RStudio (8787) and
    choose **Open in Browser**. Never use `localhost:8787`: it does not work in the browser.
-5. **Once only:** go to [github.com/settings/codespaces](https://github.com/settings/codespaces)
-   → **Default idle timeout** → write **240** minutes → **Save**. Working in RStudio does
-   not count as activity for GitHub, so with the default (30 minutes) the codespace
-   stops in the middle of the practical.
 
 ## Every following session
 
@@ -37,7 +38,7 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
 - A GitHub account includes 120 core-hours a month; this codespace has 2 cores, so
   that is **60 hours of use a month**. The practicals need about 12 hours in class plus
   your own work.
-- A codespace stops by itself after the idle timeout (step 5 of Start: 240 minutes);
+- A codespace stops by itself after the idle timeout (step 2 of Start: 240 minutes);
   activity in the RStudio tab does not count, only in the codespace tab. **Stop it
   yourself when you finish** (github.com/codespaces → **…** → **Stop codespace**): a
   codespace left running uses your free hours until the timeout.
