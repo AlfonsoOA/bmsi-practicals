@@ -9,8 +9,10 @@ the packages, the command-line tools and the data. Nothing to install.
 2. On this page, click the green **Code** button → **Codespaces** → **Create codespace on main**.
 3. Wait while the codespace is created (2–4 minutes the first time). The data and
    scripts are unpacked into the folder `~/BMSi`.
-4. RStudio opens in a new browser tab. If it does not, open the **Ports** tab at the
-   bottom of the window and click the globe icon next to **RStudio (8787)**.
+4. When it is ready, the **Terminal** at the bottom of the window shows the address of
+   RStudio (`https://<your-codespace>-8787.app.github.dev`): Ctrl + click on it. You can
+   also open the **Ports** tab, right-click the **Forwarded address** of RStudio (8787) and
+   choose **Open in Browser**. Never use `localhost:8787`: it does not work in the browser.
 
 ## Every following session
 
