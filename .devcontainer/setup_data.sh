@@ -20,6 +20,12 @@ mkdir -p ~/.config/rstudio
 # that break the first line of if/for blocks, so it is switched off.
 grep -q "enable-bracketed-paste" ~/.inputrc 2>/dev/null || echo "set enable-bracketed-paste off" >> ~/.inputrc
 
+# The preference above is not always honoured (RStudio can still open in
+# /workspaces/bmsi-practicals), so interactive R sessions also move to ~/BMSi
+# on start. Rscript (the automatic tests) is not interactive and is unaffected.
+grep -q "BMSi" ~/.Rprofile 2>/dev/null || \
+  echo 'if (interactive() && dir.exists("~/BMSi")) setwd("~/BMSi")' >> ~/.Rprofile
+
 for z in "$REPO"/data/ForStudents_*.zip; do
   [ -e "$z" ] || continue
   echo "Unpacking $(basename "$z")"
