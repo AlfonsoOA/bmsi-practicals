@@ -15,6 +15,11 @@ mkdir -p ~/.config/rstudio
 [ -f ~/.config/rstudio/rstudio-prefs.json ] || \
   echo '{ "initial_working_directory": "~/BMSi" }' > ~/.config/rstudio/rstudio-prefs.json
 
+# Terminal: pasting multi-line blocks must work as in a local terminal. The RStudio
+# terminal in the browser marks pasted text with escape codes ("bracketed paste")
+# that break the first line of if/for blocks, so it is switched off.
+grep -q "enable-bracketed-paste" ~/.inputrc 2>/dev/null || echo "set enable-bracketed-paste off" >> ~/.inputrc
+
 for z in "$REPO"/data/ForStudents_*.zip; do
   [ -e "$z" ] || continue
   echo "Unpacking $(basename "$z")"
