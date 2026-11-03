@@ -735,6 +735,7 @@ stan_file <- file.path(D4, "protein_model.stan")
 if (!file.exists(stan_file) || !identical(readLines(stan_file), strsplit(stan_code, "\n")[[1]])) writeLines(stan_code, stan_file)
 pep_n <- report[EG.Qvalue < QVALUE, .(Peptides = uniqueN(PEP.StrippedSequence)), by = PG.ProteinGroups]
 pep_n <- setNames(pep_n$Peptides, pep_n$PG.ProteinGroups)
+rm(report); invisible(gc())   # the fragment-level report is not used any more: frees memory for the Bayesian step
 hyper <- function(M) {   # M: proteins x biological runs, NA = missing. Returns the empirical priors.
   g <- grp[colnames(M)]
   pm <- rowMeans(M, na.rm = TRUE)
@@ -808,7 +809,11 @@ for (k in c("ttest", "MSstats")) {
     cat(k, ":", length(todo), "significant proteins have no Bayesian result in the file provided and no C++ compiler",
         "was found to fit them (Windows: install Rtools, guide 3.1). They are left without a Bayesian probability.\n")
   } else {
-    cat(k, ": compiling the model (only the first time, 1-2 min)...\n")
+    # In the course codespace the model comes already compiled with the image (compiling
+    # it needs 2-3 GB of memory and 1-2 min); elsewhere it is compiled here, once.
+    pre <- "/opt/bmsi/stan/protein_model.rds"; rds <- sub("[.]stan$", ".rds", stan_file)
+    if (!file.exists(rds) && file.exists(pre)) file.copy(pre, rds)
+    if (!file.exists(rds)) cat(k, ": compiling the model (only the first time, 1-2 min)...\n")
     invisible(capture.output(mod <- rstan::stan_model(file = stan_file, auto_write = TRUE)))
     n_cores <- if (CORES > 0) CORES else max(1, future::availableCores() - 1)
     cat(k, ": fitting", length(todo), "Bayesian models on", n_cores, "cores...\n")

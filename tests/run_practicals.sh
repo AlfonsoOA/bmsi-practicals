@@ -26,7 +26,8 @@ run() {   # name, script
 echo "| Practical | Result | Time (h:mm:ss) | Peak memory |"
 echo "| --- | --- | --- | --- |"
 run PC2_RNAseq      ~/BMSi/scripts/PC2_RNAseq.R
-run PC3_Proteomics  /tmp/PC3_Proteomics_pass2.R
+run PC3_Proteomics_pass1  ~/BMSi/scripts/PC3_Proteomics.R
+run PC3_Proteomics_pass2  /tmp/PC3_Proteomics_pass2.R
 run PC4_Enrichment  ~/BMSi/scripts/PC4_Enrichment.R
 run PC4b_MOFA       ~/BMSi/scripts/PC4b_MOFA.R
 
@@ -47,3 +48,6 @@ command -v rstudio-server > /dev/null && echo "| RStudio Server | OK | | |" || e
 for d in PC1_assembly/ForStudents PC2_RNAseq/ForStudents PC3_Proteomics PC4_Enrichment; do
   if [ -d ~/BMSi/$d ]; then echo "| data ~/BMSi/$d | OK | | $(du -sh ~/BMSi/$d | cut -f1) |"; else echo "| data ~/BMSi/$d | MISSING | | |"; fi
 done
+
+# Bayesian results of PC3 after both passes (to refresh the caches of ForStudents_PC3.zip)
+mkdir -p $LOGS/pc3_caches && cp ~/BMSi/PC3_Proteomics/results/4_Relevance/Bayesian_* $LOGS/pc3_caches/ 2>/dev/null

@@ -13,6 +13,6 @@
   },
   "customizations": {
     "codespaces": { "openFiles": ["README.md"] },
-    "vscode": { "extensions": [] }
+    "vscode": { "extensions": ["-REditorSupport.r"] }   // the base image adds the R extension, which starts two R processes (memory) nobody uses: RStudio is the editor
   }
 }

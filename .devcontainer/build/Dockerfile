@@ -27,6 +27,18 @@ COPY install_packages.R /tmp/install_packages.R
 RUN mkdir -p /root/.R && echo "CXX11STD = -std=gnu++17" > /root/.R/Makevars \
  && BIOC_VERSION=${BIOC_VERSION} Rscript /tmp/install_packages.R && rm -rf /tmp/* /root/.cache
 
+# The Stan model of PC3 (section 4), compiled once here: compiling it in a codespace
+# needs 2-3 GB of memory on top of the data and can exhaust the 8 GB. The workflow
+# copies scripts/PC3_Proteomics.R into the build folder; the model code is taken from it.
+COPY PC3_Proteomics.R /tmp/PC3_Proteomics.R
+RUN mkdir -p /opt/bmsi/stan && Rscript -e ' \
+      ex <- parse("/tmp/PC3_Proteomics.R"); \
+      i <- which(vapply(ex, function(e) is.call(e) && identical(e[[1]], as.name("<-")) && identical(e[[2]], as.name("stan_code")), logical(1))); \
+      stopifnot(length(i) == 1); eval(ex[[i]]); \
+      f <- "/opt/bmsi/stan/protein_model.stan"; writeLines(stan_code, f); \
+      invisible(rstan::stan_model(file = f, auto_write = TRUE)); stopifnot(file.exists(sub("stan$", "rds", f)))' \
+ && chmod -R a+rX /opt/bmsi && rm -f /tmp/PC3_Proteomics.R
+
 # Conda (Miniforge) and the environments of the terminal parts, same names and
 # versions as in the practical scripts, so the scripts find them and skip installation
 ENV CONDA_DIR=/opt/conda

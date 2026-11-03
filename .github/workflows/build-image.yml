@@ -32,6 +32,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Lower-case image name
         run: echo "IMAGE=${IMAGE,,}" >> $GITHUB_ENV
+      - name: Copy the PC3 script into the build folder (its Stan model is compiled in the image)
+        run: cp scripts/PC3_Proteomics.R .devcontainer/build/
       - name: Build the base image (log tail reported as an annotation if it fails)
         run: |
           set -o pipefail
@@ -65,11 +67,11 @@ jobs:
           echo "::notice title=Image size::$SIZE (uncompressed)"
           docker history --no-trunc --format '{{.Size}}  {{.CreatedBy}}' $IMAGE:$TAG | awk '$1 ~ /GB|MB/' | cut -c1-120 > layers.txt
           echo "::notice title=Large layers::$(sed 's/%/%25/g' layers.txt | sed ':a;N;$!ba;s/\n/%0A/g')"
-      - name: Run the practicals at codespace size (2 CPU, 8 GB)
+      - name: Run the practicals at codespace size (2 CPU; 5 GB, what is left of the 8 GB next to the editor and RStudio)
         run: |
-          docker run --rm --cpus 2 --memory 8g --memory-swap 8g -e HOME=/root \
+          docker run --rm --cpus 2 --memory 5g --memory-swap 5g -e HOME=/root \
             -v "$PWD":/repo -w /repo $IMAGE:$TAG bash tests/run_practicals.sh | tee test.log
-          echo "### Practicals (2 CPU, 8 GB)" >> $GITHUB_STEP_SUMMARY
+          echo "### Practicals (2 CPU, 5 GB)" >> $GITHUB_STEP_SUMMARY
           grep '^|' test.log >> $GITHUB_STEP_SUMMARY
           # The same table as an annotation (readable through the API), and fail if anything failed
           echo "::notice title=Practicals test::$(grep '^|' test.log | sed ':a;N;$!ba;s/\n/%0A/g')"
@@ -79,7 +81,7 @@ jobs:
             fi
           done
           # Which long steps PC3 ran or took from its caches
-          echo "::notice title=PC3 long steps::$(grep -inE 'fitting|bayesian|cache|reus|MSstats input|setting|minutes|compil' test_logs/PC3_Proteomics.log | head -n 40 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
+          echo "::notice title=PC3 long steps::$(grep -inE 'fitting|bayesian|cache|reus|MSstats input|setting|minutes|compil' test_logs/PC3_Proteomics_pass*.log | head -n 60 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\n/%0A/g')"
           ! grep -qE 'FAILED|MISSING' test.log
       - uses: actions/upload-artifact@v4
         if: always()
