@@ -13,6 +13,10 @@ the packages, the command-line tools and the data. Nothing to install.
    RStudio (`https://<your-codespace>-8787.app.github.dev`): Ctrl + click on it. You can
    also open the **Ports** tab, right-click the **Forwarded address** of RStudio (8787) and
    choose **Open in Browser**. Never use `localhost:8787`: it does not work in the browser.
+5. **Once only:** go to [github.com/settings/codespaces](https://github.com/settings/codespaces)
+   → **Default idle timeout** → write **240** minutes → **Save**. Working in RStudio does
+   not count as activity for GitHub, so with the default (30 minutes) the codespace
+   stops in the middle of the practical.
 
 ## Every following session
 
@@ -33,8 +37,12 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
 - A GitHub account includes 120 core-hours a month; this codespace has 2 cores, so
   that is **60 hours of use a month**. The practicals need about 12 hours in class plus
   your own work.
-- A codespace stops by itself after 30 minutes without activity; stop it yourself when
-  you finish (github.com/codespaces → **…** → **Stop codespace**).
+- A codespace stops by itself after the idle timeout (step 5 of Start: 240 minutes);
+  activity in the RStudio tab does not count, only in the codespace tab. **Stop it
+  yourself when you finish** (github.com/codespaces → **…** → **Stop codespace**): a
+  codespace left running uses your free hours until the timeout.
+- If it stops in the middle of a session, nothing is lost: open it again from
+  github.com/codespaces; RStudio starts again by itself (Terminal shows the address).
 - Download the results you want to keep (RStudio → Files → More → Export) and
   **delete the codespace when the course ends**.
 
