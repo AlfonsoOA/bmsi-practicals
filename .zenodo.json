@@ -1,0 +1,23 @@
+{
+  "title": "Systems Molecular Biology: computer practicals (University of Córdoba)",
+  "description": "Computer practicals of the course Systems Molecular Biology (degree in Biochemistry, University of Córdoba): genome assembly, RNA-seq, label-free proteomics, functional enrichment and multi-omics integration, with a ready-made GitHub Codespaces environment and automatic tests.",
+  "upload_type": "lesson",
+  "creators": [
+    {
+      "name": "Olaya-Abril, Alfonso",
+      "orcid": "0000-0002-8961-1099",
+      "affiliation": "University of Córdoba, Spain"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "access_right": "open",
+  "keywords": [
+    "omics",
+    "bioinformatics",
+    "RNA-seq",
+    "proteomics",
+    "teaching",
+    "reproducibility",
+    "GitHub Codespaces"
+  ]
+}

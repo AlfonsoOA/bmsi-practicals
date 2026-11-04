@@ -60,3 +60,7 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
   created. Files above 100 MB are not accepted by GitHub.
 - After the first build, make the package public once: GitHub profile → Packages →
   `bmsi-practicals` → Package settings → Change visibility → Public.
+
+## Licence and citation
+
+Teaching materials: CC BY 4.0 (LICENSE-CONTENT.md). Code: MIT (LICENSE). How to cite: CITATION.cff.

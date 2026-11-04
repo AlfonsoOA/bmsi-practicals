@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite them as below."
+title: "Systems Molecular Biology: computer practicals (University of Córdoba)"
+abstract: "Computer practicals of the course Systems Molecular Biology (degree in Biochemistry, University of Córdoba): genome assembly, RNA-seq, label-free proteomics, functional enrichment and multi-omics integration, with a ready-made GitHub Codespaces environment and automatic tests."
+authors:
+  - family-names: "Olaya-Abril"
+    given-names: "Alfonso"
+    orcid: "https://orcid.org/0000-0002-8961-1099"
+    affiliation: "Department of Biochemistry and Molecular Biology, University of Córdoba, Spain"
+license: [CC-BY-4.0, MIT]
+repository-code: "https://github.com/AlfonsoOA/bmsi-practicals"
+keywords: ["omics", "bioinformatics", "RNA-seq", "proteomics", "teaching", "reproducibility", "GitHub Codespaces"]
+type: software
