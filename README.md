@@ -35,9 +35,9 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
 
 ## Free usage: what to keep in mind
 
-- A GitHub account includes 120 core-hours a month; this codespace has 2 cores, so
-  that is **60 hours of use a month**. The practicals need about 12 hours in class plus
-  your own work.
+- A GitHub account includes 120 core-hours a month; this codespace has 4 cores, so
+  that is **30 hours of use a month**. The practicals need about 12 hours in class plus
+  your own work, spread over November and December.
 - A codespace stops by itself after the idle timeout (step 2 of Start: 240 minutes);
   activity in the RStudio tab does not count, only in the codespace tab. **Stop it
   yourself when you finish** (github.com/codespaces → **…** → **Stop codespace**): a
@@ -55,7 +55,7 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
   environments, RStudio Server). The workflow `.github/workflows/build-image.yml` builds
   it, publishes it to GHCR and test-runs every practical at codespace size (2 CPU, 8 GB);
   the results table is in the summary of each workflow run.
-- `.devcontainer/devcontainer.json`: what students get (prebuilt image, 2-core machine).
+- `.devcontainer/devcontainer.json`: what students get (prebuilt image, 4-core / 16 GB machine).
 - `data/`: the `ForStudents_*.zip` files, unpacked into `~/BMSi` when a codespace is
   created. Files above 100 MB are not accepted by GitHub.
 - After the first build, make the package public once: GitHub profile → Packages →

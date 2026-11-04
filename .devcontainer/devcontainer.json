@@ -1,10 +1,10 @@
 {
   // What students get when they create a codespace: the prebuilt image (no build
-  // time), a 2-core / 8 GB machine, the practical data in ~/BMSi and RStudio
+  // time), a 4-core / 16 GB machine (PC3 needs more than the ~6.5 GB a 2-core codespace leaves to R), the practical data in ~/BMSi and RStudio
   // opening in a browser tab.
   "name": "Systems Molecular Biology - computer practicals",
   "image": "ghcr.io/alfonsooa/bmsi-practicals:2026-27",
-  "hostRequirements": { "cpus": 2, "memory": "8gb", "storage": "32gb" },
+  "hostRequirements": { "cpus": 4, "memory": "16gb", "storage": "32gb" },
   "postCreateCommand": "bash .devcontainer/setup_data.sh",
   "postAttachCommand": "bash .devcontainer/start_rstudio.sh",
   "forwardPorts": [8787],
