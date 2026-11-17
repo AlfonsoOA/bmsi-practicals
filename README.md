@@ -19,10 +19,13 @@ the packages, the command-line tools and the data. Nothing to install.
    also open the **Ports** tab, right-click the **Forwarded address** of RStudio (8787) and
    choose **Open in Browser**. Never use `localhost:8787`: it does not work in the browser.
 
-## Every following session
+## Every session: one codespace, deleted at the end
 
-Go to [github.com/codespaces](https://github.com/codespaces) and open **the same
-codespace**. Do not create a new one: your results are kept in the one you already have.
+1. At the start of the session create a new codespace (step 3 above; about 10 minutes until
+   the Terminal says "RStudio is ready"). **Have only one codespace at a time.**
+2. At the end, keep your results: `bash ~/BMSi/scripts/pack_results.sh PC1` (PC2, PC3, PC4),
+   then RStudio → Files → `BMSi` → tick the zip → More → Export.
+3. **Delete the codespace**: [github.com/codespaces](https://github.com/codespaces) → **…** → **Delete**.
 
 ## Where things are
 
@@ -35,19 +38,14 @@ codespace**. Do not create a new one: your results are kept in the one you alrea
 
 ## Free usage: what to keep in mind
 
-- A GitHub account includes 120 core-hours a month; this codespace has 4 cores, so
-  that is **30 hours of use a month**. The practicals need about 12 hours in class plus
-  your own work, spread over November and December.
-- A codespace stops by itself after the idle timeout (step 2 of Start: 240 minutes);
-  activity in the RStudio tab does not count, only in the codespace tab. **Stop it
-  yourself when you finish** (github.com/codespaces → **…** → **Stop codespace**): a
-  codespace left running uses your free hours until the timeout.
-- If it stops in the middle of a session, nothing is lost: open it again from
-  github.com/codespaces; RStudio starts again by itself (Terminal shows the address).
-- Download the results you want to keep (RStudio → Files → More → Export) and
-  **delete the codespace when the course ends**.
-
----
+- A GitHub account includes 120 core-hours a month (this codespace has 4 cores, so **30 hours
+  of use a month**, enough for the practicals) and **15 GB-month of storage**.
+- **Storage is what runs out:** a codespace takes 10–15 GB for as long as it exists, even when
+  stopped. Two weeks kept, or two codespaces at once, use up the month and GitHub blocks
+  Codespaces until the next month. That is why each codespace is deleted at the end of the session.
+- A codespace stops by itself after the idle timeout (step 2: 240 minutes); activity in the
+  RStudio tab does not count, only in the codespace tab. If it stops in the middle of a session,
+  nothing is lost: open it again from github.com/codespaces.
 
 ## For the instructor
 
