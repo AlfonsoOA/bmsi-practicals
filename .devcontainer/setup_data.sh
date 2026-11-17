@@ -20,6 +20,11 @@ mkdir -p ~/.config/rstudio
 # that break the first line of if/for blocks, so it is switched off.
 grep -q "enable-bracketed-paste" ~/.inputrc 2>/dev/null || echo "set enable-bracketed-paste off" >> ~/.inputrc
 
+# conda ready in every new terminal, so that "conda activate bmsi_pc1" (or bmsi_pc2) works
+# directly, as the protocols say
+grep -q "conda shell.bash hook" ~/.bashrc 2>/dev/null || \
+  echo 'command -v conda > /dev/null 2>&1 && eval "$(conda shell.bash hook)"' >> ~/.bashrc
+
 # The preference above is not always honoured (RStudio can still open in
 # /workspaces/bmsi-practicals), so interactive R sessions also move to ~/BMSi
 # on start. Rscript (the automatic tests) is not interactive and is unaffected.
