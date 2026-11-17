@@ -51,6 +51,10 @@ get_release() {   # zip name, practical folder
 }
 get_release ForStudents_PC1.zip PC1_assembly
 get_release ForStudents_PC2.zip PC2_RNAseq
+# Disk: the codespace has 32 GB and the image takes most of them (~4 GB free after the
+# data). The trimmed reads provided in ForStudents of PC1 (1.4 GB) are not used: every
+# student creates their own with fastp (section 4.2).
+rm -f ~/BMSi/PC1_assembly/ForStudents/3_*_paired.fastq
 
 mkdir -p ~/BMSi/scripts
 cp -n "$REPO"/scripts/* ~/BMSi/scripts/ 2>/dev/null || true
