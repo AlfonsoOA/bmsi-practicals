@@ -1,0 +1,22 @@
+name: Measure codespace disk use
+
+# How much disk a learner's codespace occupies (image + data): this is what GitHub
+# counts as Codespaces storage (GB-month) while the codespace exists.
+on: workflow_dispatch
+
+jobs:
+  measure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space on the runner
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+      - name: Image sizes and data size
+        run: |
+          for img in ghcr.io/alfonsooa/bmsi-practicals:2026-27 ghcr.io/alfonsooa/bmsi-mooc:2026-27; do
+            docker pull -q $img > /dev/null
+            echo "::notice title=Image $img::uncompressed size $(docker image inspect --format '{{.Size}}' $img | awk '{printf "%.1f GB", $1/1e9}')"
+          done
+          docker run --rm -e HOME=/root -v "$PWD":/repo -w /repo ghcr.io/alfonsooa/bmsi-practicals:2026-27 \
+            bash -c 'bash .devcontainer/setup_data.sh > /dev/null 2>&1; du -sh ~/BMSi; du -sh ~/BMSi/* ' > data.txt
+          echo "::notice title=Course data in ~/BMSi::$(sed ':a;N;$!ba;s/\n/ | /g' data.txt)"
