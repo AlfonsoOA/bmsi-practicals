@@ -8,6 +8,12 @@
 set -e
 REPO=$(cd "$(dirname "$0")/.." && pwd)
 RELEASE=https://github.com/AlfonsoOA/bmsi-practicals/releases/download/data-2026-27
+# The data go to the large temporary disk of the codespace (/tmp, >100 GB free) through
+# a link: the image almost fills the 32 GB main disk, and downloading and unpacking the
+# data there can run out of space ("No space left on device").
+if [ ! -e ~/BMSi ] && [ "$(df --output=avail -k /tmp 2>/dev/null | tail -1)" -gt 20000000 ] 2>/dev/null; then
+  mkdir -p /tmp/BMSi && ln -s /tmp/BMSi ~/BMSi
+fi
 mkdir -p ~/BMSi
 
 # First of all (RStudio can open before the downloads finish): RStudio starts in ~/BMSi (Files pane and working directory)
