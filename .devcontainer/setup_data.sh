@@ -56,7 +56,6 @@ get_release() {   # zip name, practical folder
   fi
 }
 get_release ForStudents_PC1.zip PC1_assembly
-get_release ForStudents_PC2.zip PC2_RNAseq
 # Disk: the codespace has 32 GB and the image takes most of them (~4 GB free after the
 # data). The trimmed reads provided in ForStudents of PC1 (1.4 GB) are not used: every
 # student creates their own with fastp (section 4.2).
@@ -65,4 +64,15 @@ rm -f ~/BMSi/PC1_assembly/ForStudents/3_*_paired.fastq
 mkdir -p ~/BMSi/scripts
 cp -n "$REPO"/scripts/* ~/BMSi/scripts/ 2>/dev/null || true
 
+# In a codespace, RStudio starts now (PC1, PC3 and PC4 are ready) and the large package of
+# PC2 (2.1 GB) is downloaded afterwards in the background, so nobody waits for it.
+# Elsewhere (automatic tests) everything is done in order.
+if [ "$CODESPACES" = "true" ]; then
+  bash "$REPO/.devcontainer/start_rstudio.sh" || true
+  setsid nohup bash -c "$(declare -f get_release); RELEASE=$RELEASE; get_release ForStudents_PC2.zip PC2_RNAseq; echo PC2 data ready" \
+    > ~/BMSi/PC2_download.log 2>&1 < /dev/null &
+  echo "PC2 data are being downloaded in the background (see ~/BMSi/PC2_download.log)."
+else
+  get_release ForStudents_PC2.zip PC2_RNAseq
+fi
 echo "Data and scripts are in ~/BMSi:"; ls ~/BMSi
